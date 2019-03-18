@@ -1,4 +1,4 @@
-const { expect } = require('chai');
+const { expect } = require('chai')
 import enzyme, { shallow } from 'enzyme'
 import sinon from 'sinon'
 import React from 'react'
@@ -32,10 +32,14 @@ import { AllStudents } from '../../app/components/AllStudents'
 describe('Tier One: Students', () => {
   describe('<AllStudents /> component', () => {
     xit('renders the students passed in as props', () => {
-      const wrapper = shallow(<AllStudents students={[
-        { id: 1, firstName: 'Mae', lastName: 'Jemison' },
-        { id: 2, firstName: 'Sally', lastName: 'Ride' },
-      ]} />)
+      const wrapper = shallow(
+        <AllStudents
+          students={[
+            { id: 1, firstName: 'Mae', lastName: 'Jemison' },
+            { id: 2, firstName: 'Sally', lastName: 'Ride' },
+          ]}
+        />
+      )
       expect(wrapper.text()).to.include('Mae Jemison')
       expect(wrapper.text()).to.include('Sally Ride')
     })
@@ -94,8 +98,8 @@ describe('Tier One: Students', () => {
         testStore.dispatch(action)
         const newState = testStore.getState()
 
-        expect(newState.students).to.be.deep.equal(students);
-        expect(newState.students).to.not.be.equal(prevState.students);
+        expect(newState.students).to.be.deep.equal(students)
+        expect(newState.students).to.not.be.equal(prevState.students)
       })
     })
   })
@@ -144,9 +148,10 @@ describe('Tier One: Students', () => {
       const student = Student.build()
       try {
         await student.validate()
-        throw Error('validation should have failed without firstName, lastName, email')
-      }
-      catch (err) {
+        throw Error(
+          'validation should have failed without firstName, lastName, email'
+        )
+      } catch (err) {
         expect(err.message).to.contain('firstName cannot be null')
         expect(err.message).to.contain('lastName cannot be null')
         expect(err.message).to.contain('email cannot be null')
@@ -158,8 +163,7 @@ describe('Tier One: Students', () => {
       try {
         await student.validate()
         throw Error('validation should have failed with empty name and address')
-      }
-      catch (err) {
+      } catch (err) {
         expect(err.message).to.contain('Validation notEmpty on firstName')
         expect(err.message).to.contain('Validation notEmpty on lastName')
         expect(err.message).to.contain('Validation notEmpty on email')
@@ -181,8 +185,7 @@ describe('Tier One: Students', () => {
       try {
         await overachiever.save()
         throw Error('validation should have failed with too high gpa')
-      }
-      catch (err) {
+      } catch (err) {
         expect(err.message).to.contain('Validation max on gpa')
       }
       student.gpa = -1
@@ -190,8 +193,7 @@ describe('Tier One: Students', () => {
       try {
         await underachiever.validate()
         throw Error('validation should have failed with too low gpa')
-      }
-      catch (err) {
+      } catch (err) {
         expect(err.message).to.contain('Validation min on gpa')
       }
     })
