@@ -2,7 +2,7 @@ const { expect } = require('chai');
 import enzyme, { mount } from 'enzyme'
 import sinon from 'sinon'
 import React from 'react'
-import Adapter from 'enzyme-adapter-react-16.3'
+import Adapter from 'enzyme-adapter-react-16'
 import { Provider } from 'react-redux'
 
 import * as rrd from 'react-router-dom'
