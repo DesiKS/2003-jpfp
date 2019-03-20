@@ -9,6 +9,7 @@
 5. Start the build process and your application with: `npm run start-dev`. If you using Windows, you may need to execute `npm run start-server` and `npm run build-watch` separately (in their own terminal tabs).
 6. If you navigate to the URL you should see some UI already :) [We already have some connection code to get you started]
 7. Check out the starting seed file in `seed.js` - you can run it by executing `npm run seed`
+8. Create `senior-enrichment` and `senior-enrichment-test` databases
 
 ## Details
 
