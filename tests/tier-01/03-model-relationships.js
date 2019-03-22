@@ -1,4 +1,4 @@
-const { expect } = require('chai');
+const { expect } = require('chai')
 const { db } = require('../../server/db')
 const { Campus, Student } = require('../../server/db')
 
