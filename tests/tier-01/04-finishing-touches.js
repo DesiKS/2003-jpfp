@@ -1,4 +1,4 @@
-const { expect } = require('chai');
+const { expect } = require('chai')
 import enzyme, { mount } from 'enzyme'
 import sinon from 'sinon'
 import React from 'react'
@@ -23,11 +23,9 @@ import { AllStudents } from '../../app/components/AllStudents'
 import Root from '../../app/components/root'
 
 // Sometimes, we want to wait for a short tinme for async events to finish.
-const waitFor = (wait) =>
-  new Promise((resolve) => setTimeout(resolve, wait))
+const waitFor = wait => new Promise(resolve => setTimeout(resolve, wait))
 
 describe('Tier One: Final Touches', () => {
-
   describe('Navigation', () => {
     /** In order to test react-router, we need to hijack the BrowserRouter
      *  in the root of our app. Sinon allows us to "stub" the BrowserRouter.
@@ -45,10 +43,10 @@ describe('Tier One: Final Touches', () => {
     ]
     beforeEach(() => {
       sinon.stub(rrd, 'BrowserRouter').callsFake(({ children }) => {
-        return (<div>{children}</div>)
+        return <div>{children}</div>
       })
-      mockAxios.onGet('/api/campuses').replyOnce(200, campuses);
-      mockAxios.onGet('/api/students').replyOnce(200, students);
+      mockAxios.onGet('/api/campuses').replyOnce(200, campuses)
+      mockAxios.onGet('/api/students').replyOnce(200, students)
     })
     afterEach(() => {
       rrd.BrowserRouter.restore()
@@ -116,10 +114,10 @@ describe('Tier One: Final Touches', () => {
     ]
     beforeEach(() => {
       sinon.stub(rrd, 'BrowserRouter').callsFake(({ children }) => {
-        return (<div>{children}</div>)
+        return <div>{children}</div>
       })
-      mockAxios.onGet('/api/campuses').replyOnce(200, campuses);
-      mockAxios.onGet('/api/students').replyOnce(200, students);
+      mockAxios.onGet('/api/campuses').replyOnce(200, campuses)
+      mockAxios.onGet('/api/students').replyOnce(200, students)
     })
     afterEach(() => {
       rrd.BrowserRouter.restore()

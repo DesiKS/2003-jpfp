@@ -1,4 +1,4 @@
-const { expect } = require('chai');
+const { expect } = require('chai')
 import enzyme, { shallow } from 'enzyme'
 import sinon from 'sinon'
 import React from 'react'
@@ -33,10 +33,20 @@ describe('Tier One: Campuses', () => {
   describe('<AllCampuses /> component', () => {
     xit('renders the campuses passed in as props', () => {
       const wrapper = shallow(
-        <AllCampuses campuses={[
-          { id: 1, name: 'Mars Academy', imageUrl: '/images/mars.png' },
-          { id: 2, name: 'Jupiter Jumpstart', imageUrl: '/images/jupiter.jpeg' },
-        ]} />
+        <AllCampuses
+          campuses={[
+            {
+              id: 1,
+              name: 'Mars Academy',
+              imageUrl: '/images/mars.png',
+            },
+            {
+              id: 2,
+              name: 'Jupiter Jumpstart',
+              imageUrl: '/images/jupiter.jpeg',
+            },
+          ]}
+        />
       )
       expect(wrapper.text()).to.include('Mars Academy')
       expect(wrapper.text()).to.include('Jupiter Jumpstart')
@@ -61,7 +71,7 @@ describe('Tier One: Campuses', () => {
     describe('set campuses', () => {
       const campuses = [
         { id: 1, name: 'Mars Academy', imageUrl: '/images/mars.png' },
-        { id: 2, name: 'Jupiter Jumpstart', imageUrl: '/images/jupiter.jpeg' }
+        { id: 2, name: 'Jupiter Jumpstart', imageUrl: '/images/jupiter.jpeg' },
       ]
 
       xit('setCampuses action creator', () => {
@@ -92,8 +102,16 @@ describe('Tier One: Campuses', () => {
 
       xit('reduces on SET_CAMPUSES action', () => {
         const campuses = [
-          { id: 1, name: 'Mars Academy', imageUrl: '/images/mars.png' },
-          { id: 2, name: 'Jupiter Jumpstart', imageUrl: '/images/jupiter.jpeg' }
+          {
+            id: 1,
+            name: 'Mars Academy',
+            imageUrl: '/images/mars.png',
+          },
+          {
+            id: 2,
+            name: 'Jupiter Jumpstart',
+            imageUrl: '/images/jupiter.jpeg',
+          },
         ]
         const action = { type: 'SET_CAMPUSES', campuses }
 
@@ -101,8 +119,8 @@ describe('Tier One: Campuses', () => {
         testStore.dispatch(action)
         const newState = testStore.getState()
 
-        expect(newState.campuses).to.be.deep.equal(campuses);
-        expect(newState.campuses).to.not.be.equal(prevState.campuses);
+        expect(newState.campuses).to.be.deep.equal(campuses)
+        expect(newState.campuses).to.not.be.equal(prevState.campuses)
       })
     })
   })
@@ -124,9 +142,7 @@ describe('Tier One: Campuses', () => {
     })
 
     xit('GET /api/campuses responds with all campuses', async () => {
-      const response = await agent
-        .get('/api/campuses')
-        .expect(200)
+      const response = await agent.get('/api/campuses').expect(200)
       expect(response.body).to.deep.equal([
         { id: 1, name: 'Mars Academy', imageUrl: '/images/mars.png' },
         { id: 2, name: 'Jupiter Jumpstart', imageUrl: '/images/jupiter.jpeg' },
@@ -139,18 +155,20 @@ describe('Tier One: Campuses', () => {
     before(() => db.sync({ force: true }))
     afterEach(() => db.sync({ force: true }))
 
-
     xit('has fields name, address, imageUrl, description', () => {
       const campus = Campus.build({
         name: 'Jupiter Jumpstart',
         address: '5.2 AU',
         imageUrl: '/images/jupiter.png',
-        description: 'The best JavaScript Academy for toddlers in the solar system!',
+        description:
+          'The best JavaScript Academy for toddlers in the solar system!',
       })
       expect(campus.name).to.equal('Jupiter Jumpstart')
       expect(campus.address).to.equal('5.2 AU')
       expect(campus.imageUrl).to.equal('/images/jupiter.png')
-      expect(campus.description).to.equal('The best JavaScript Academy for toddlers in the solar system!')
+      expect(campus.description).to.equal(
+        'The best JavaScript Academy for toddlers in the solar system!'
+      )
     })
 
     xit('*** requires name and address', async () => {
@@ -162,8 +180,7 @@ describe('Tier One: Campuses', () => {
       try {
         await campus.validate()
         throw Error('validation should have failed with empty name and address')
-      }
-      catch (err) {
+      } catch (err) {
         expect(err.message).to.contain('Validation notEmpty on name')
         expect(err.message).to.contain('Validation notEmpty on address')
       }
