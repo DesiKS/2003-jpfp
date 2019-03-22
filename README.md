@@ -17,9 +17,33 @@
 
 You are the CTO of the Margaret Hamilton Interplanetary Academy of JavaScript. Create a RESTful web platform that allows you to manage your students and campuses. Before getting started, please carefully review the expectations as outlined below.
 
-### The tools
+### The Tools
 
 For this project, you must use Express to handle HTTP requests and Sequelize to interface with your database. Likewise, you must use React, Redux and React-Redux on the front-end. This means that all important state (i.e. students and campuses) must be managed by the Redux store (unimportant state, like form data, may be managed by stateful React components). Components that display student/campus data should therefore be connected to the Redux store. If you perform side-effects (like AJAX requests), you should encapsulate them in thunks.
+
+### Allowed Resources
+
+This is a solo project. Here are some resources that you are allowed and encouraged to use:
+
+* Lecture Slides/Recordings
+* Workshops
+* Checkpoints
+* Workshop Solution Code
+* Any code they themselves have written at Fullstack
+* Documentation
+* Discussion forums (e.g. StackOverflow)
+
+And here are some resources you are NOT allowed to use:
+
+* Other students’ code
+* Copy-pasting from discussion forums
+* Soliciting help online (e.g. posting a bid to “do my homework”)
+
+You are absolutely encouraged to ask for help from fellows and instructors. We're especially eager to explain concepts that are relevant to the project in case you need a refresher. However, unlike the workshops, we will not be debugging your code. 
+
+That being said, we do want to make sure you are not experiencing any systems issues that hinder your development. So if you are experiencing an error and are wondering "is this a problem with my node version?", that's something we want to help you resolve.
+
+As always, if you are ever unsure, please feel free to ask!
 
 ### Requirements + Rubric
 
@@ -45,6 +69,22 @@ Take a look in the wireframes folder as a reference for how your front-end _coul
  - [Postman](https://www.getpostman.com/)
    ![](https://www.dropbox.com/s/4fk3b90cd0i1a5y/postman_post.png?raw=true)
 - Databases: use Sequelize in your routes and see if you are receiving what you expect
+
+### The Tests
+
+Tier One has tests provided. These tests are meant to guide your development by directing your attention to the appropriate places. We strongly encourage you to start by getting these to pass. However, **your score does not depend on how many of these tests pass, only on the number of completed requirements (plus the rubric score).**
+
+**You might implement features in the later tiers that cause those provided tests to fail.** In a real production environment, this would be an opportunity to refactor the tests to better match the needs of the project. But for the purposes of this project, you are not expected to do so.
+
+The only tests that affect your score are the ones you are expected to write yourself. They look like this:
+
+```javascript
+xit('*** renders "No Campuses" if passed an empty array of campuses', () => {
+  throw new Error('replace this error with your own test')
+})
+```
+
+So, when you see a test with `***` at the beginning, you should delete the `throw new Error` portion and replace it with your own test. Do not change the test description.
 
 ### Video Walkthrough
 Please submit a short, 5 minute screencast of a walk-through of the functionality for each user story in your app. E.g. for "As a user, I can create a campus", you can fill out the form for creating a campus and then see the new campus appear in the campuses list. *There is no need to show us the code you wrote.* We recommend using Quicktime to record the screencast (instructions on how to do that [here](https://support.apple.com/kb/PH5882?locale=en_US&viewlocale=en_US)).
