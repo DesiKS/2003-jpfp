@@ -16,7 +16,6 @@ console.log(chalk.yellow(`Opening database connection to ${dbName}`))
 
 const db = new Sequelize(`postgres://localhost:5432/${dbName}`, {
   logging: false,
-  operatorsAliases: false,
 })
 
 module.exports = db

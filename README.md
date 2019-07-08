@@ -1,4 +1,4 @@
-# Senior Enrichment Project
+# Junior Phase Final Project
 
 ## Getting started
 
@@ -9,7 +9,7 @@
 5. Start the build process and your application with: `npm run start-dev`. If you using Windows, you may need to execute `npm run start-server` and `npm run build-watch` separately (in their own terminal tabs).
 6. If you navigate to the URL you should see some UI already :) [We already have some connection code to get you started]
 7. Check out the starting seed file in `seed.js` - you can run it by executing `npm run seed`
-8. Create `senior-enrichment` and `senior-enrichment-test` databases
+8. Create `final-project` and `final-project-test` databases
 
 ## Details
 
@@ -39,7 +39,7 @@ And here are some resources you are NOT allowed to use:
 * Copy-pasting from discussion forums
 * Soliciting help online (e.g. posting a bid to “do my homework”)
 
-You are absolutely encouraged to ask for help from fellows and instructors. We're especially eager to explain concepts that are relevant to the project in case you need a refresher. However, unlike the workshops, we will not be debugging your code. 
+You are absolutely encouraged to ask for help from fellows and instructors. We're especially eager to explain concepts that are relevant to the project in case you need a refresher. However, unlike the workshops, we will not be debugging your code.
 
 That being said, we do want to make sure you are not experiencing any systems issues that hinder your development. So if you are experiencing an error and are wondering "is this a problem with my node version?", that's something we want to help you resolve.
 
@@ -62,7 +62,7 @@ Take a look in the wireframes folder as a reference for how your front-end _coul
 
 ### How to test functionality without a frontend
 - GET: use your browser
-- POST / PUT / DELETE : 
+- POST / PUT / DELETE :
  - CLI (command line interface) with `curl`
    - e.g. `curl -H "Content-Type: application/json" -X POST -d '{"username":"kate","password":"1234"}' http://localhost:3000/api/login`
    - `-H`: headers. `-X`: verb. `-d`: data (must be of the type specified in headers). http://[address]:[port]/[route_path]
@@ -89,12 +89,12 @@ So, when you see a test with `***` at the beginning, you should delete the `thro
 ### Video Walkthrough
 Please submit a short, 5 minute screencast of a walk-through of the functionality for each user story in your app. E.g. for "As a user, I can create a campus", you can fill out the form for creating a campus and then see the new campus appear in the campuses list. *There is no need to show us the code you wrote.* We recommend using Quicktime to record the screencast (instructions on how to do that [here](https://support.apple.com/kb/PH5882?locale=en_US&viewlocale=en_US)).
 
-Once you've recorded your screencast, please *upload it to YouTube as an unlisted video*. Email `academics+enrichment@fullstackacademy.com` with the title `Senior Enrichment Submission: [Your Name]` and include your repo link and YouTube recording link. This will aid us in evaluating your submission.
+Once you've recorded your screencast, please *upload it to YouTube as an unlisted video*. Email the instructors with the title `Junior Phase Final Project: [Your Name]` and include your repo link and YouTube recording link. This will aid us in evaluating your submission.
 
 Well before the deadline, we recommend practicing this by recording a very short screencast and uploading it as an unlisted video. If you encounter any technical issues, reach out to us so that we can help you resolve them.
 
 ## Evaluation
 
-- Requirements score (60%)
-- Rubric score (40%)
-- Extra credit (15% max)
+- Requirements score (70%)
+- Rubric score (30%)
+- Extra credit (10% max)
