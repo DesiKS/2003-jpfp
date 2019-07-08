@@ -9,7 +9,7 @@
 5. Start the build process and your application with: `npm run start-dev`. If you using Windows, you may need to execute `npm run start-server` and `npm run build-watch` separately (in their own terminal tabs).
 6. If you navigate to the URL you should see some UI already :) [We already have some connection code to get you started]
 7. Check out the starting seed file in `seed.js` - you can run it by executing `npm run seed`
-8. Create `senior-enrichment` and `senior-enrichment-test` databases
+8. Create `final-project` and `final-project-test` databases
 
 ## Details
 
@@ -39,7 +39,7 @@ And here are some resources you are NOT allowed to use:
 * Copy-pasting from discussion forums
 * Soliciting help online (e.g. posting a bid to “do my homework”)
 
-You are absolutely encouraged to ask for help from fellows and instructors. We're especially eager to explain concepts that are relevant to the project in case you need a refresher. However, unlike the workshops, we will not be debugging your code. 
+You are absolutely encouraged to ask for help from fellows and instructors. We're especially eager to explain concepts that are relevant to the project in case you need a refresher. However, unlike the workshops, we will not be debugging your code.
 
 That being said, we do want to make sure you are not experiencing any systems issues that hinder your development. So if you are experiencing an error and are wondering "is this a problem with my node version?", that's something we want to help you resolve.
 
@@ -62,7 +62,7 @@ Take a look in the wireframes folder as a reference for how your front-end _coul
 
 ### How to test functionality without a frontend
 - GET: use your browser
-- POST / PUT / DELETE : 
+- POST / PUT / DELETE :
  - CLI (command line interface) with `curl`
    - e.g. `curl -H "Content-Type: application/json" -X POST -d '{"username":"kate","password":"1234"}' http://localhost:3000/api/login`
    - `-H`: headers. `-X`: verb. `-d`: data (must be of the type specified in headers). http://[address]:[port]/[route_path]
