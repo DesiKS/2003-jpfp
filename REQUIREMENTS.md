@@ -160,8 +160,9 @@ Congrats! You have completed your fourth vertical slice! Make sure to `commit -m
 - [ ] Write a route to update an existing campus
 - [ ] Write a route to update an existing student
 
+</details>
 
-### Bonus Tier: Finishing Touches (9 EC)
+### Bonus Tier: Finishing Touches (10 EC)
 
 <details>
 - Finishing Touches
@@ -176,5 +177,6 @@ Congrats! You have completed your fourth vertical slice! Make sure to `commit -m
 - Filtering
   - [ ] Create a filter on all-students view to only show students who are not registered to a campus
   - [ ] Create a filter on the all-campuses view to only show campuses that do not have any registered students
-
+- Seed
+  - [ ] Seed 100+ students and 100+ campuses
 </details>
