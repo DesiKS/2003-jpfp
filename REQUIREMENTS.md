@@ -136,7 +136,7 @@ Congrats! You have completed your fourth vertical slice! Make sure to `commit -m
 
 </details>
 
-### Tier 5: Updating a Robot and Updating a Project (11/71)
+### Tier 5: Updating a Campus and Updating a Student (11/71)
 
 <details>
 
@@ -149,11 +149,11 @@ Congrats! You have completed your fourth vertical slice! Make sure to `commit -m
   - [ ] Update the campus in the current view without needing to refresh the page
 - [ ] In the single-campus view, display an `Unregister` button next to each of its students, which removes the student from the campus (in the database as well as this view); hint: the student is still in the database but is no longer associated with the campus
 
-- [ ] Write a component to display a form updating _at least_ a project's title and completion status
-- [ ] Display this component EITHER as part of the single-project view, or as its own view
+- [ ] Write a component to display a form updating _at least_ a student's first and last names, and email
+- [ ] Display this component EITHER as part of the single-student view, or as its own view
 - Submitting the form with valid data should:
-  - [ ] Make an AJAX request that causes that project to be updated in the database
-  - [ ] Update the project in the current view without needing to refresh the page
+  - [ ] Make an AJAX request that causes that student to be updated in the database
+  - [ ] Update the student in the current view without needing to refresh the page
 
 #### Backend
 
