@@ -35,6 +35,7 @@ The requirements below are broken into separate **tiers**, which model the way w
 - [ ] Students may be associated with at most one campus. Likewise, campuses may be associated with many students
 
 #### Seed
+
 - [ ] Running the seed file creates campuses and students for demonstration purposes
 
 #### Testing
@@ -93,6 +94,7 @@ Congrats! You have completed your second vertical slice! Make sure to `commit -m
 - [ ] Write a component to display a form for adding a new campus that contains inputs for _at least_ the name and address.
 - [ ] Display this component EITHER as part of the all-campuses view, or as its own view
 - Submitting the form with a valid name/address should:
+
   - [ ] Make an AJAX request that causes the new campus to be persisted in the database
   - [ ] Add the new campus to the list of campuses without needing to refresh the page
 
@@ -119,6 +121,7 @@ Congrats! You have completed your third vertical slice! Make sure to `commit -m 
 
 - [ ] In the all-campuses view, include an `X` button next to each campus
 - Clicking the `X` button should:
+
   - [ ] Make an AJAX request that causes that campus to be removed from database
   - [ ] Remove the campus from the list of campuses without needing to refresh the page
 
@@ -162,30 +165,35 @@ Congrats! You have completed your fourth vertical slice! Make sure to `commit -m
 
 </details>
 
-### Bonus Tier: Finishing Touches (10 EC)
+### Bonus Tier: Finishing Touches (15 EC)
 
 <details>
-  
+
 #### Finishing Touches
 
-  - [ ] If a user attempts to add a new student or campus without a required field, a helpful message should be displayed
-  - [ ] If a user attempts to access a page that doesn't exist (ex. `/cafeteria`), a helpful "not found" message should be displayed
-  - [ ] If a user attempts to view a student/campus that doesn't exist, a helpful message should be displayed
-  - [ ] Whenever a component needs to wait for data to load from the server, a "loading" message should be displayed until the data is available
-  - [ ] Overall, the app is spectacularly styled and visually stunning
-  
+- [ ] If a user attempts to add a new student or campus without a required field, a helpful message should be displayed
+- [ ] If a user attempts to access a page that doesn't exist (ex. `/potato`), a helpful "not found" message should be displayed
+- [ ] If a user attempts to view a student/campus that doesn't exist, a helpful message should be displayed
+- [ ] Whenever a component needs to wait for data to load from the server, a "loading" message should be displayed until the data is available
+- [ ] Overall, the app is spectacularly styled and visually stunning
+
 #### Ordering
 
-  - [ ] Create option for students to be ordered based on GPA on all-students view
-  - [ ] Create option for campuses to be ordered alphabetically on all-campuses view
-  
+- [ ] Create option for students to be ordered based on lastName on all-students view
+- [ ] Create option for students to be ordered based on GPA on all-students view
+- [ ] Create option for campuses to be ordered based on number of enrolled students on all-campuses view
+
 #### Filtering
 
-  - [ ] Create a filter on all-students view to only show students who are not registered to a campus
-  - [ ] Create a filter on the all-campuses view to only show campuses that do not have any registered students
-  
-#### Seed
+- [ ] Create a filter on all-students view to only show students who are not registered to a campus
+- [ ] Create a filter on the all-campuses view to only show campuses that do not have any registered students
 
-  - [ ] Seed 100+ students and 100+ campuses
-  
+#### Seeding & Pagination
+
+- [ ] Seed 100+ students and 100+ campuses
+- [ ] Implement _back-end_ pagination for students (e.g. `/api/students?page=1` returns the first ten students' data, and `/api/students?page=2` returns students 11-20)
+- [ ] Implement _back-end_ pagination for campuses (e.g. `/api/campuses?page=1` returns the first ten campuses' data, and `/api/campuses?page=2` returns campuses 11-20)
+- [ ] Implement _front-end_ pagination for students (e.g. `/students?page=1` renders the first ten students, and `/students?page=2` renders students 11-20)
+- [ ] Implement _front-end_ pagination for campuses (e.g. `/campuses?page=1` renders the first ten campuses, and `/campuses?page=2` renders campuses 11-20)
+
 </details>

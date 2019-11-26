@@ -52,7 +52,7 @@ _Comments from your instructor or fellow will go here_
 
 - Requirements score (71 points total, weighted at 70% of total grade)
 - Rubric score (24 points total, weighted at 30% of total grade)
-- Extra credit (10 points total, for an additional 10% max)
+- Extra credit (15 points total, for an additional 15% max)
 
 - RAW REQUIREMENT SCORE: __
 - RAW RUBRIC SCORE: __
