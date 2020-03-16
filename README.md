@@ -30,6 +30,8 @@ For the requirements and rubric, refer to the following two files:
 
 Make sure to read them carefully!
 
+There are some test specs already written for you to help you get started – these are _just a guide_ and are meant to help steer you through your coding process, or to be used as reference for writing your own test specs (extra credit). Passing or not passing these specs will not affect your grade.
+
 ### Views and Functionality
 
 Take a look in the wireframes folder as a reference for how your front-end _could_ look. Of course, you are encouraged to be creative and flex your own design muscles, but the wireframes should function as a good baseline/inspirational resource. Either way, the most important part of the project is that it works - **design/appearance is extra-credit**. If there ever appears to be a conflict between the wireframes and the rubric/requirements below, **go with the letter of the rubric/requirements.**
