@@ -18,8 +18,8 @@ const seed = require('../../seed')
 const adapter = new Adapter()
 enzyme.configure({ adapter })
 
-import { AllCampuses } from '../../app/components/AllCampuses'
-import { AllStudents } from '../../app/components/AllStudents'
+import AllCampuses  from '../../app/components/AllCampuses'
+import AllStudents  from '../../app/components/AllStudents'
 import Root from '../../app/components/root'
 
 // Sometimes, we want to wait for a short tinme for async events to finish.

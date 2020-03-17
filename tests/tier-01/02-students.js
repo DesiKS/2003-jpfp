@@ -28,7 +28,7 @@ const adapter = new Adapter()
 enzyme.configure({ adapter })
 
 /* NOTE: Make sure you pay attention to the path below. This is where your React components should live! */
-import { AllStudents } from '../../app/components/AllStudents'
+import AllStudents from '../../app/components/AllStudents'
 
 describe('Tier One: Students', () => {
   describe('<AllStudents /> component', () => {
