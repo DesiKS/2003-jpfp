@@ -1,10 +1,15 @@
 const { expect } = require('chai')
-import enzyme, { shallow } from 'enzyme'
+import enzyme, { mount } from 'enzyme'
 import sinon from 'sinon'
 import React from 'react'
 import Adapter from 'enzyme-adapter-react-16'
 import configureMockStore from 'redux-mock-store'
 import thunkMiddleware from 'redux-thunk'
+import waitForExpect from 'wait-for-expect'
+import { Provider } from 'react-redux'
+import * as rrd from 'react-router-dom'
+
+const { MemoryRouter } = rrd
 
 const middlewares = [thunkMiddleware]
 const mockStore = configureMockStore(middlewares)
@@ -14,6 +19,8 @@ const initialState = {
 
 import mockAxios from '../mock-axios'
 import { setCampuses, fetchCampuses } from '../../app/redux/campuses'
+
+import store from '../../app/store'
 
 import rootReducer from '../../app/redux'
 import { createStore } from 'redux'
@@ -29,39 +36,103 @@ enzyme.configure({ adapter })
 
 /* NOTE: Make sure you pay attention to the path below. This is where your React components should live! */
 import AllCampuses from '../../app/components/AllCampuses'
+import AllStudents from '../../app/components/AllStudents'
+import Root from '../../app/components/root'
 
 describe('Tier One: Campuses', () => {
   describe('<AllCampuses /> component', () => {
+    //I refactored this out to be out here rather than just the first test since we are using it in a bunch of places
+    const campuses = [
+      { id: 1, name: 'Mars Academy', imageUrl: '/images/mars.png' },
+      { id: 2, name: 'Jupiter Jumpstart', imageUrl: '/images/jupiter.jpeg' }
+    ];
+
+    beforeEach(() => {
+      sinon.stub(rrd, 'BrowserRouter').callsFake(({ children }) => {
+        return <div>{children}</div>;
+      });
+      mockAxios.onGet('/api/campuses').replyOnce(200, campuses);
+    });
+    afterEach(() => {
+      rrd.BrowserRouter.restore();
+    });
+
+    //Checks that the route renders the right component
+    xit('renders <AllCampuses /> at /campuses', () => {
+      const wrapper = mount(
+        <Provider store={store}>
+          <MemoryRouter initialEntries={['/campuses']}>
+            <AllCampuses />
+          </MemoryRouter>
+        </Provider>
+      );
+      expect(wrapper.find(AllCampuses)).to.have.length(1);
+      //Do we need to check all students here? Probably not but wanted to make sure I was not missing anything. This was left over from the old tests
+      expect(wrapper.find(AllStudents)).to.have.length(0);
+    });
+
+    //Testing the component gets the props from state
+    //Is the short hand okay for the props?
     xit('renders the campuses passed in as props', () => {
-      const wrapper = shallow(
-        <AllCampuses
-          campuses={[
-            {
-              id: 1,
-              name: 'Mars Academy',
-              imageUrl: '/images/mars.png',
-            },
-            {
-              id: 2,
-              name: 'Jupiter Jumpstart',
-              imageUrl: '/images/jupiter.jpeg',
-            },
-          ]}
-        />
-      )
-      expect(wrapper.text()).to.include('Mars Academy')
-      expect(wrapper.text()).to.include('Jupiter Jumpstart')
-      const images = wrapper.find('img').map(node => node.get(0).props.src)
+      const wrapper = mount(
+        <Provider store={store}>
+          <MemoryRouter initialEntries={['/campuses']}>
+            <AllCampuses campuses />
+          </MemoryRouter>
+        </Provider>
+      );
+      expect(wrapper.text()).to.include('Mars Academy');
+      expect(wrapper.text()).to.include('Jupiter Jumpstart');
+      const images = wrapper.find('img').map(node => node.get(0).props.src);
       expect(images).to.include.members([
         '/images/mars.png',
-        '/images/jupiter.jpeg',
-      ])
-    })
+        '/images/jupiter.jpeg'
+      ]);
+    });
+
+    //Testing that the state gets the campuses from the thunk (assuming via componentDidMount)
+    xit('initializes campuses from the server when the application loads the /campuses route', async () => {
+      const reduxStateBeforeMount = store.getState();
+      expect(reduxStateBeforeMount.campuses).to.deep.equal([]);
+      mount(
+        <Provider store={store}>
+          <MemoryRouter initialEntries={['/campuses']}>
+            <AllCampuses />
+          </MemoryRouter>
+        </Provider>
+      );
+      await waitForExpect(() => {
+        const reduxStateAfterMount = store.getState();
+        expect(reduxStateAfterMount.campuses).to.deep.equal(campuses);
+      });
+    });
+    //So this tests if we ONLY get the redux state/store to have campuses inside of it after the thunk fires ^
+
+    //While this makes sure that allcampuses component has it in its props by what I am assuming is mountStateToProps?
+    xit('<AllCampuses /> is passed campuses from store as props', async () => {
+      const wrapper = mount(
+        <Provider store={store}>
+          <MemoryRouter initialEntries={['/campuses']}>
+            <Root />
+          </MemoryRouter>
+        </Provider>
+      );
+      await waitForExpect(() => {
+        //What is update doing here? Are we expecting something to update in the render of the component?
+        //going off the example in the docs, they have a counter fire in the render https://enzymejs.github.io/enzyme/docs/api/ShallowWrapper/update.html
+        wrapper.update();
+        const { campuses: reduxCampuses } = store.getState();
+        const { campuses: componentCampuses } = wrapper
+          .find(AllCampuses)
+          .props();
+        expect(componentCampuses).to.deep.equal(reduxCampuses);
+      });
+    });
 
     xit('*** renders "No Campuses" if passed an empty array of campuses', () => {
-      throw new Error('replace this error with your own test')
-    })
-  })
+      throw new Error('replace this error with your own test');
+    });
+  });
 
   describe('Redux', () => {
     let fakeStore
