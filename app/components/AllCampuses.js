@@ -1,17 +1,51 @@
-import React from 'react';
+import React from "react";
+import { connect } from "react-redux";
 
+// You are expected to dispatch a thunk to fetch the campuses from the server,
+// store the campuses in the Redux store, and use mapState to pass these
+// campuses to AllCampuses as props.
 
-export default class AllCampuses extends React.Component {
+// You are NOT expected to fetch the campuses and store them in this component's
+// state.
+export class AllCampuses extends React.Component {
+  componentDidMount() {
 
-  render() {
-    return (
-      <div />
-    )
   }
+  render() {
+    const { campuses } = this.props;
+    return (
+      <div>
+        <ul>
+          {campuses && campuses.length
+            ? campuses.map(campus => {
+                return (
+                  <li key={campus.id}>
+                    <div>{campus.name}</div>
+                    <img src={campus.imageUrl} />
+                  </li>
+                );
+              })
+            : "No Campuses"}
+        </ul>
+      </div>
+    );
+  }
+}
 
+const mapState = (reduxState) => {
+  return {
+
+  }
+}
+
+const mapDispatch = (dispatch) => {
+  return {
+
+  }
 }
 
 // Currently, we're just exporting the component as-is. When we're ready to
 // hook it up to the redux store, we'll export the connected component by default:
 // Remember to remove the export default listed above once your ready to export!
 // export default connect(mapState, mapDispatch)(AllCampuses)
+export default connect(mapState, mapDispatch)(AllCampuses)
