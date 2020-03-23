@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { fetchCampuses } from "../redux/campuses"
 
 // You are expected to dispatch a thunk to fetch the campuses from the server,
 // store the campuses in the Redux store, and use mapState to pass these
@@ -9,7 +10,7 @@ import { connect } from "react-redux";
 // state.
 export class AllCampuses extends React.Component {
   componentDidMount() {
-
+    this.props.getCampuses()
   }
   render() {
     const { campuses } = this.props;
@@ -34,13 +35,13 @@ export class AllCampuses extends React.Component {
 
 const mapState = (reduxState) => {
   return {
-
+    campuses: reduxState.campuses
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-
+    getCampuses: () => dispatch(fetchCampuses())
   }
 }
 
