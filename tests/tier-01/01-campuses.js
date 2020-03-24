@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-expressions */
-const { expect } = require("chai");
-import enzyme, { mount } from "enzyme";
+import { expect } from "chai";
+import { mount } from "enzyme";
 import sinon from "sinon";
 import React from "react";
-import Adapter from "enzyme-adapter-react-16";
 import configureMockStore from "redux-mock-store";
 import thunkMiddleware from "redux-thunk";
 import waitForExpect from "wait-for-expect";
@@ -32,9 +31,6 @@ const agent = require("supertest")(app);
 const { db, Campus } = require("../../server/db");
 
 const seed = require("../../seed");
-
-const adapter = new Adapter();
-enzyme.configure({ adapter });
 
 // NOTE: Make sure you pay attention to the path below. This is where your React components should live!
 // AllCampuses is the default export from that module, and it is connected to Redux
@@ -157,16 +153,18 @@ describe.only("Tier One: Campuses", () => {
 
     // Check out app/redux/campuses.js for these two tests
     describe("set/fetch campuses", () => {
-      it("setCampuses action creator", () => {
+      it("setCampuses action creator returns a valid action", () => {
         expect(setCampuses(campuses)).to.deep.equal({
           type: "SET_CAMPUSES",
           campuses
         });
       });
 
-      it("fetchCampuses thunk creator", async () => {
+      it("fetchCampuses thunk creator returns a thunk that GETs /api/campuses", async () => {
         await fakeStore.dispatch(fetchCampuses());
-        // TODO: Test to be sure they are GETting /api/campuses
+        const [getRequest] = mockAxios.history.get;
+        expect(getRequest).to.not.equal(undefined);
+        expect(getRequest.url).to.equal("/api/campuses");
         const actions = fakeStore.getActions();
         expect(actions[0].type).to.equal("SET_CAMPUSES");
         expect(actions[0].campuses).to.deep.equal(campuses);
@@ -241,6 +239,7 @@ describe.only("Tier One: Campuses", () => {
   });
 
   describe("Navigation", () => {
+    // TODO: Add these to the setuo file
     beforeEach(() => {
       sinon.stub(rrd, "BrowserRouter").callsFake(({ children }) => {
         return <div>{children}</div>;
@@ -260,8 +259,6 @@ describe.only("Tier One: Campuses", () => {
         </Provider>
       );
       expect(wrapper.find(AllCampuses)).to.have.length(1);
-      // David: Do we need to check all students here? Probably not but wanted to make sure I was not missing anything. This was left over from the old tests
-      // Finn: I want to check to make sure they aren't rendering AllStuents and AllCampuses on every route.
       expect(wrapper.find(AllStudents)).to.have.length(0);
     });
 
@@ -278,19 +275,37 @@ describe.only("Tier One: Campuses", () => {
     const { findAll: campusFindAll } = Campus;
     beforeEach(() => {
       Campus.findAll = sinon.spy(() => [
-        { id: 1, name: "Mars Academy", imageUrl: "/images/mars.png" },
-        { id: 2, name: "Jupiter Jumpstart", imageUrl: "/images/jupiter.jpeg" }
+        {
+          id: 1,
+          name: "Mars Academy",
+          imageUrl: "/images/mars.png"
+        },
+        {
+          id: 2,
+          name: "Jupiter Jumpstart",
+          imageUrl: "/images/jupiter.jpeg"
+        }
       ]);
     });
     afterEach(() => {
       Campus.findAll = campusFindAll;
     });
 
-    xit("GET /api/campuses responds with all campuses", async () => {
+    // Consider writing your GET route in server/api/campuses.js. And don't
+    // forget to apply the express router to your API in server/api/index.js!
+    it("GET /api/campuses responds with all campuses", async () => {
       const response = await agent.get("/api/campuses").expect(200);
       expect(response.body).to.deep.equal([
-        { id: 1, name: "Mars Academy", imageUrl: "/images/mars.png" },
-        { id: 2, name: "Jupiter Jumpstart", imageUrl: "/images/jupiter.jpeg" }
+        {
+          id: 1,
+          name: "Mars Academy",
+          imageUrl: "/images/mars.png"
+        },
+        {
+          id: 2,
+          name: "Jupiter Jumpstart",
+          imageUrl: "/images/jupiter.jpeg"
+        }
       ]);
       expect(Campus.findAll.calledOnce).to.be.equal(true);
     });
@@ -300,7 +315,7 @@ describe.only("Tier One: Campuses", () => {
     before(() => db.sync({ force: true }));
     afterEach(() => db.sync({ force: true }));
 
-    xit("has fields name, address, imageUrl, description", () => {
+    it("has fields name, address, imageUrl, description", () => {
       const campus = Campus.build({
         name: "Jupiter Jumpstart",
         address: "5.2 AU",
@@ -320,7 +335,7 @@ describe.only("Tier One: Campuses", () => {
       throw new Error("replace this error with your own test");
     });
 
-    xit("name and address cannot be empty", async () => {
+    it("name and address cannot be empty", async () => {
       const campus = Campus.build({ name: "", address: "" });
       try {
         await campus.validate();
@@ -333,7 +348,7 @@ describe.only("Tier One: Campuses", () => {
       }
     });
 
-    xit("default imageUrl if left blank", async () => {
+    it("default imageUrl if left blank", async () => {
       const campus = Campus.build({
         name: "Jupiter Jumpstart",
         address: "5.2 AU"
@@ -347,7 +362,7 @@ describe.only("Tier One: Campuses", () => {
   describe("Seed file", () => {
     beforeEach(seed);
 
-    xit("populates the database with at least three campuses", async () => {
+    it("populates the database with at least three campuses", async () => {
       const seededCampuses = await Campus.findAll();
       expect(seededCampuses).to.have.lengthOf.at.least(3);
     });
