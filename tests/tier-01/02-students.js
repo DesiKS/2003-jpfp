@@ -115,8 +115,48 @@ describe("Tier One: Students", () => {
       expect(wrapper.text()).to.include("Sally Ride");
     });
 
+    it("renders DIFFERENT students passed in as props", () => {
+      const differentStudents = [
+        {
+          id: 3,
+          firstName: "Mary",
+          lastName: "Shelley"
+        },
+        {
+          id: 4,
+          firstName: "Ada",
+          lastName: "Lovelace"
+        }
+      ];
+      const wrapper = mount(
+        <UnconnectedAllStudents
+          students={differentStudents}
+          getStudents={getStudentsSpy}
+        />
+      );
+      expect(wrapper.text()).to.not.include("Mae Jemison");
+      expect(wrapper.text()).to.not.include("Sally Ride");
+      expect(wrapper.text()).to.include("Mary Shelley");
+      expect(wrapper.text()).to.include("Ada Lovelace");
+    });
+
     xit('*** renders "No Students" if passed an empty array of students', () => {
       throw new Error("replace this error with your own test");
+    });
+
+    // In a later step, we'll create a thunk, and map that thunk to AllCampuses
+    // as getCampuses. For right now, we just need to be sure the component
+    // calls it after it mounts.
+    it("calls this.props.getCampuses after mount", async () => {
+      mount(
+        <UnconnectedAllStudents
+          students={students}
+          getStudents={getStudentsSpy}
+        />
+      );
+      await waitForExpect(() => {
+        expect(getStudentsSpy).to.have.been.called;
+      });
     });
   });
 
@@ -127,19 +167,6 @@ describe("Tier One: Students", () => {
     });
 
     describe("set students", () => {
-      const students = [
-        {
-          id: 1,
-          firstName: "Mae",
-          lastName: "Jemison"
-        },
-        {
-          id: 2,
-          firstName: "Sally",
-          lastName: "Ride"
-        }
-      ];
-
       xit("setStudents action creator", () => {
         expect(setStudents(students)).to.deep.equal({
           type: "SET_STUDENTS",
