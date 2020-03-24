@@ -31,6 +31,8 @@ const agent = require("supertest")(app);
 
 const { db, Campus } = require("../../server/db");
 
+const seed = require("../../seed");
+
 const adapter = new Adapter();
 enzyme.configure({ adapter });
 
@@ -87,6 +89,36 @@ describe.only("Tier One: Campuses", () => {
       expect(images).to.include.members([
         "/images/mars.png",
         "/images/jupiter.jpeg"
+      ]);
+    });
+
+    it("renders DIFFERENT campuses passed in as props", () => {
+      const differentCampuses = [
+        {
+          id: 3,
+          name: "Pluto Conservatory",
+          imageUrl: "/images/pluto.png"
+        },
+        {
+          id: 4,
+          name: "Art Institute of Mercury",
+          imageUrl: "/images/mercury.png"
+        }
+      ];
+      const wrapper = mount(
+        <UnconnectedAllCampuses
+          campuses={differentCampuses}
+          getCampuses={getCampusesSpy}
+        />
+      );
+      expect(wrapper.text()).to.not.include("Mars Academy");
+      expect(wrapper.text()).to.not.include("Jupiter Jumpstart");
+      expect(wrapper.text()).to.include("Pluto Conservatory");
+      expect(wrapper.text()).to.include("Art Institute of Mercury");
+      const images = wrapper.find("img").map(node => node.get(0).props.src);
+      expect(images).to.include.members([
+        "/images/pluto.png",
+        "/images/mercury.png"
       ]);
     });
 
@@ -182,7 +214,7 @@ describe.only("Tier One: Campuses", () => {
     //So this tests if we ONLY get the redux state/store to have campuses inside of it after the thunk fires ^
 
     //While this makes sure that allcampuses component has it in its props by what I am assuming is mountStateToProps?
-    it("<AllCampuses /> is passed campuses from store as props", async () => {
+    it("<AllCampuses /> renders campuses from the Redux store", async () => {
       const wrapper = mount(
         <Provider store={store}>
           <MemoryRouter initialEntries={["/campuses"]}>
@@ -198,11 +230,11 @@ describe.only("Tier One: Campuses", () => {
         // sometimes the old stuff from the first render will still show up in tests. wrapper.update()
         // ensures that all and only the latest render are available to the tests.
         wrapper.update();
+
         const { campuses: reduxCampuses } = store.getState();
-        const { campuses: componentCampuses } = wrapper
-          .find(UnconnectedAllCampuses)
-          .props();
-        expect(componentCampuses).to.deep.equal(reduxCampuses);
+        reduxCampuses.forEach((reduxCampus) => {
+          expect(wrapper.text()).to.include(reduxCampus.name);
+        })
       });
     });
   });
@@ -307,6 +339,15 @@ describe.only("Tier One: Campuses", () => {
       await campus.validate();
       expect(campus.imageUrl).to.be.a("string");
       expect(campus.imageUrl.length).to.be.greaterThan(1);
+    });
+  });
+
+  describe("Seed file", () => {
+    beforeEach(seed);
+
+    xit("populates the database with at least three campuses", async () => {
+      const seededCampuses = await Campus.findAll();
+      expect(seededCampuses).to.have.lengthOf.at.least(3);
     });
   });
 });

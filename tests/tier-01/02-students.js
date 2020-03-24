@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 const { expect } = require('chai')
 import enzyme, { shallow } from 'enzyme'
 import sinon from 'sinon'

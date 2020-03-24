@@ -35,7 +35,8 @@ export class AllCampuses extends React.Component {
 
 const mapState = (reduxState) => {
   return {
-    campuses: reduxState.campuses
+    campuses: reduxState.campuses,
+    // campuses: []
   }
 }
 
