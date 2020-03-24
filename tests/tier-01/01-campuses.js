@@ -42,7 +42,7 @@ import AllCampuses, {
 import AllStudents from "../../app/components/AllStudents";
 import Routes from "../../app/components/Routes";
 
-describe.only("Tier One: Campuses", () => {
+describe("Tier One: Campuses", () => {
   // We'll use this array of campuses as dummy data for testing purposes
   const campuses = [
     {
@@ -67,14 +67,9 @@ describe.only("Tier One: Campuses", () => {
     afterEach(() => {
       getCampusesSpy.resetHistory();
     });
-    //I refactored this out to be out here rather than just the first test since we are using it in a bunch of places
 
-    //Testing the component gets the props from state
-    //Is the short hand okay for the props?
-
-    // Finn: Oh! I actually didn't know you could do props shorthand like this.
-    // I'm still inclined to use the long-hand, because I think it's a little
-    // more familar to students.
+    // This test is interested in the unconnected AllCampuses component. It is
+    // exported as a named export in app/components/AllCampuses.js
     it("renders the campuses passed in as props", () => {
       const wrapper = mount(
         <UnconnectedAllCampuses
