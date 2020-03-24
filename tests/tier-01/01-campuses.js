@@ -36,7 +36,10 @@ const seed = require("../../seed");
 const adapter = new Adapter();
 enzyme.configure({ adapter });
 
-/* NOTE: Make sure you pay attention to the path below. This is where your React components should live! */
+// NOTE: Make sure you pay attention to the path below. This is where your React components should live!
+// AllCampuses is the default export from that module, and it is connected to Redux
+// UnconnectedAllCampuses is a named export from that module, and it is NOT connected
+// to Redux. We're testing BOTH of these components in this slice.
 import AllCampuses, {
   AllCampuses as UnconnectedAllCampuses
 } from "../../app/components/AllCampuses";
@@ -76,7 +79,7 @@ describe.only("Tier One: Campuses", () => {
     // Finn: Oh! I actually didn't know you could do props shorthand like this.
     // I'm still inclined to use the long-hand, because I think it's a little
     // more familar to students.
-    xit("renders the campuses passed in as props", () => {
+    it("renders the campuses passed in as props", () => {
       const wrapper = mount(
         <UnconnectedAllCampuses
           campuses={campuses}
@@ -85,6 +88,8 @@ describe.only("Tier One: Campuses", () => {
       );
       expect(wrapper.text()).to.include("Mars Academy");
       expect(wrapper.text()).to.include("Jupiter Jumpstart");
+      // The test is expecting an image for each campus, with src set to the
+      // campus's imageUrl
       const images = wrapper.find("img").map(node => node.get(0).props.src);
       expect(images).to.include.members([
         "/images/mars.png",
@@ -92,7 +97,7 @@ describe.only("Tier One: Campuses", () => {
       ]);
     });
 
-    xit("renders DIFFERENT campuses passed in as props", () => {
+    it("renders DIFFERENT campuses passed in as props", () => {
       const differentCampuses = [
         {
           id: 3,
@@ -115,6 +120,8 @@ describe.only("Tier One: Campuses", () => {
       expect(wrapper.text()).to.not.include("Jupiter Jumpstart");
       expect(wrapper.text()).to.include("Pluto Conservatory");
       expect(wrapper.text()).to.include("Art Institute of Mercury");
+      // The test is expecting an image for each campus, with src set to the
+      // campus's imageUrl
       const images = wrapper.find("img").map(node => node.get(0).props.src);
       expect(images).to.include.members([
         "/images/pluto.png",
@@ -129,7 +136,7 @@ describe.only("Tier One: Campuses", () => {
     // In a later step, we'll create a thunk, and map that thunk to AllCampuses
     // as getCampuses. For right now, we just need to be sure the component
     // calls it after it mounts.
-    xit("calls this.props.getCampuses after mount", async () => {
+    it("calls this.props.getCampuses after mount", async () => {
       mount(
         <UnconnectedAllCampuses
           campuses={campuses}
@@ -148,16 +155,18 @@ describe.only("Tier One: Campuses", () => {
       fakeStore = mockStore(initialState);
     });
 
+    // Check out app/redux/campuses.js for these two tests
     describe("set/fetch campuses", () => {
-      xit("setCampuses action creator", () => {
+      it("setCampuses action creator", () => {
         expect(setCampuses(campuses)).to.deep.equal({
           type: "SET_CAMPUSES",
           campuses
         });
       });
 
-      xit("fetchCampuses thunk creator", async () => {
+      it("fetchCampuses thunk creator", async () => {
         await fakeStore.dispatch(fetchCampuses());
+        // TODO: Test to be sure they are GETting /api/campuses
         const actions = fakeStore.getActions();
         expect(actions[0].type).to.equal("SET_CAMPUSES");
         expect(actions[0].campuses).to.deep.equal(campuses);
@@ -177,7 +186,7 @@ describe.only("Tier One: Campuses", () => {
       // To pass this test, you'll need to create the campuses reducer, as well
       // as apply that reducer to the redux store with combineReducers in
       // app/redux/index.js
-      xit("reduces on SET_CAMPUSES action", () => {
+      it("reduces on SET_CAMPUSES action", () => {
         const action = { type: "SET_CAMPUSES", campuses };
 
         const prevState = testStore.getState();
@@ -191,12 +200,10 @@ describe.only("Tier One: Campuses", () => {
   });
 
   describe("Connect: react-redux", () => {
-    //Testing that the state gets the campuses from the thunk (assuming via componentDidMount)
-    // Finn: I think the problem here is that if students work through these tests in order,
-    // they'll get stuck at this step, cause they haven't started the Redux store yet.
-    // In the jpfp-B, this is addressed with a separate "react + redux" section after
-    // both react and redux have at least been setup.
-    xit("initializes campuses from the server when the application loads the /campuses route", async () => {
+    // This tests is expecting your component to dispatch a thunk after it mounts
+    // Remember that getCampuses prop from an earlier test....?
+    // Remember mapDispatch....?
+    it("initializes campuses from the server when the application loads the /campuses route", async () => {
       const reduxStateBeforeMount = store.getState();
       expect(reduxStateBeforeMount.campuses).to.deep.equal([]);
       mount(
@@ -211,10 +218,10 @@ describe.only("Tier One: Campuses", () => {
         expect(reduxStateAfterMount.campuses).to.deep.equal(campuses);
       });
     });
-    //So this tests if we ONLY get the redux state/store to have campuses inside of it after the thunk fires ^
 
-    //While this makes sure that allcampuses component has it in its props by what I am assuming is mountStateToProps?
-    xit("<AllCampuses /> renders campuses from the Redux store", async () => {
+    // This test is expecting your component to render the campuses from the
+    // Redux store. Remember mapState....?
+    it("<AllCampuses /> renders campuses from the Redux store", async () => {
       const wrapper = mount(
         <Provider store={store}>
           <MemoryRouter initialEntries={["/campuses"]}>
@@ -223,12 +230,6 @@ describe.only("Tier One: Campuses", () => {
         </Provider>
       );
       await waitForExpect(() => {
-        //What is update doing here? Are we expecting something to update in the render of the component?
-        //going off the example in the docs, they have a counter fire in the render https://enzymejs.github.io/enzyme/docs/api/ShallowWrapper/update.html
-
-        // Finn: The reason is that Enzyme is bad. If a component renders, and then re-renders,
-        // sometimes the old stuff from the first render will still show up in tests. wrapper.update()
-        // ensures that all and only the latest render are available to the tests.
         wrapper.update();
 
         const { campuses: reduxCampuses } = store.getState();
@@ -248,8 +249,9 @@ describe.only("Tier One: Campuses", () => {
     afterEach(() => {
       rrd.BrowserRouter.restore();
     });
+
     //Checks that the route renders the right component
-    xit("renders <AllCampuses /> at /campuses", () => {
+    it("renders <AllCampuses /> at /campuses", () => {
       const wrapper = mount(
         <Provider store={store}>
           <MemoryRouter initialEntries={["/campuses"]}>

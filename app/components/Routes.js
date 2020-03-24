@@ -1,22 +1,21 @@
 import React from "react";
-// import {
-//   BrowserRouter as Router,
-//   Switch,
-//   Route,
-//   NavLink
-// } from "react-router-dom";
-// import AllCampuses from "./AllCampuses";
-// import { Provider } from "react-redux";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { AllCampuses } from "./AllCampuses";
 
 const Routes = () => {
   return (
-    <div>
-      <nav>Welcome!</nav>
-      <main>
-        <h1>Welcome to the Margaret Hamilton Academy of JavaScript!</h1>
-        <p>This seems like a nice place to get started with some Routes!</p>
-      </main>
-    </div>
+    <Router>
+      <div>
+        <nav>Welcome!</nav>
+        <Switch>
+          <Route path="/campuses" component={AllCampuses} />
+        </Switch>
+        <main>
+          <h1>Welcome to the Margaret Hamilton Academy of JavaScript!</h1>
+          <p>This seems like a nice place to get started with some Routes!</p>
+        </main>
+      </div>
+    </Router>
   );
 };
 
