@@ -20,7 +20,7 @@ enzyme.configure({ adapter })
 
 import AllCampuses  from '../../app/components/AllCampuses'
 import AllStudents  from '../../app/components/AllStudents'
-import Root from '../../app/components/root'
+import Routes from '../../app/components/Routes'
 
 // Sometimes, we want to wait for a short tinme for async events to finish.
 const waitFor = wait => new Promise(resolve => setTimeout(resolve, wait))
@@ -56,7 +56,7 @@ describe('Tier One: Final Touches', () => {
       const wrapper = mount(
         <Provider store={store}>
           <MemoryRouter initialEntries={['/campuses']}>
-            <Root />
+            <Routes />
           </MemoryRouter>
         </Provider>
       )
@@ -68,7 +68,7 @@ describe('Tier One: Final Touches', () => {
       const wrapper = mount(
         <Provider store={store}>
           <MemoryRouter initialEntries={['/students']}>
-            <Root />
+            <Routes />
           </MemoryRouter>
         </Provider>
       )
@@ -130,7 +130,7 @@ describe('Tier One: Final Touches', () => {
       mount(
         <Provider store={store}>
           <MemoryRouter initialEntries={['/']}>
-            <Root />
+            <Routes />
           </MemoryRouter>
         </Provider>
       )
@@ -144,7 +144,7 @@ describe('Tier One: Final Touches', () => {
       const wrapper = mount(
         <Provider store={store}>
           <MemoryRouter initialEntries={['/campuses']}>
-            <Root />
+            <Routes />
           </MemoryRouter>
         </Provider>
       )
@@ -159,7 +159,7 @@ describe('Tier One: Final Touches', () => {
       const wrapper = mount(
         <Provider store={store}>
           <MemoryRouter initialEntries={['/students']}>
-            <Root />
+            <Routes />
           </MemoryRouter>
         </Provider>
       )

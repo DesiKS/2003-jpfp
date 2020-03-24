@@ -41,7 +41,7 @@ import AllCampuses, {
   AllCampuses as UnconnectedAllCampuses
 } from "../../app/components/AllCampuses";
 import AllStudents from "../../app/components/AllStudents";
-import Root from "../../app/components/root";
+import Routes from "../../app/components/Routes";
 
 describe.only("Tier One: Campuses", () => {
   // We'll use this array of campuses as dummy data for testing purposes
@@ -76,7 +76,7 @@ describe.only("Tier One: Campuses", () => {
     // Finn: Oh! I actually didn't know you could do props shorthand like this.
     // I'm still inclined to use the long-hand, because I think it's a little
     // more familar to students.
-    it("renders the campuses passed in as props", () => {
+    xit("renders the campuses passed in as props", () => {
       const wrapper = mount(
         <UnconnectedAllCampuses
           campuses={campuses}
@@ -92,7 +92,7 @@ describe.only("Tier One: Campuses", () => {
       ]);
     });
 
-    it("renders DIFFERENT campuses passed in as props", () => {
+    xit("renders DIFFERENT campuses passed in as props", () => {
       const differentCampuses = [
         {
           id: 3,
@@ -129,7 +129,7 @@ describe.only("Tier One: Campuses", () => {
     // In a later step, we'll create a thunk, and map that thunk to AllCampuses
     // as getCampuses. For right now, we just need to be sure the component
     // calls it after it mounts.
-    it("calls this.props.getCampuses after mount", async () => {
+    xit("calls this.props.getCampuses after mount", async () => {
       mount(
         <UnconnectedAllCampuses
           campuses={campuses}
@@ -149,14 +149,14 @@ describe.only("Tier One: Campuses", () => {
     });
 
     describe("set/fetch campuses", () => {
-      it("setCampuses action creator", () => {
+      xit("setCampuses action creator", () => {
         expect(setCampuses(campuses)).to.deep.equal({
           type: "SET_CAMPUSES",
           campuses
         });
       });
 
-      it("fetchCampuses thunk creator", async () => {
+      xit("fetchCampuses thunk creator", async () => {
         await fakeStore.dispatch(fetchCampuses());
         const actions = fakeStore.getActions();
         expect(actions[0].type).to.equal("SET_CAMPUSES");
@@ -177,7 +177,7 @@ describe.only("Tier One: Campuses", () => {
       // To pass this test, you'll need to create the campuses reducer, as well
       // as apply that reducer to the redux store with combineReducers in
       // app/redux/index.js
-      it("reduces on SET_CAMPUSES action", () => {
+      xit("reduces on SET_CAMPUSES action", () => {
         const action = { type: "SET_CAMPUSES", campuses };
 
         const prevState = testStore.getState();
@@ -196,7 +196,7 @@ describe.only("Tier One: Campuses", () => {
     // they'll get stuck at this step, cause they haven't started the Redux store yet.
     // In the jpfp-B, this is addressed with a separate "react + redux" section after
     // both react and redux have at least been setup.
-    it("initializes campuses from the server when the application loads the /campuses route", async () => {
+    xit("initializes campuses from the server when the application loads the /campuses route", async () => {
       const reduxStateBeforeMount = store.getState();
       expect(reduxStateBeforeMount.campuses).to.deep.equal([]);
       mount(
@@ -214,7 +214,7 @@ describe.only("Tier One: Campuses", () => {
     //So this tests if we ONLY get the redux state/store to have campuses inside of it after the thunk fires ^
 
     //While this makes sure that allcampuses component has it in its props by what I am assuming is mountStateToProps?
-    it("<AllCampuses /> renders campuses from the Redux store", async () => {
+    xit("<AllCampuses /> renders campuses from the Redux store", async () => {
       const wrapper = mount(
         <Provider store={store}>
           <MemoryRouter initialEntries={["/campuses"]}>
@@ -232,9 +232,9 @@ describe.only("Tier One: Campuses", () => {
         wrapper.update();
 
         const { campuses: reduxCampuses } = store.getState();
-        reduxCampuses.forEach((reduxCampus) => {
+        reduxCampuses.forEach(reduxCampus => {
           expect(wrapper.text()).to.include(reduxCampus.name);
-        })
+        });
       });
     });
   });
@@ -249,11 +249,11 @@ describe.only("Tier One: Campuses", () => {
       rrd.BrowserRouter.restore();
     });
     //Checks that the route renders the right component
-    it("renders <AllCampuses /> at /campuses", () => {
+    xit("renders <AllCampuses /> at /campuses", () => {
       const wrapper = mount(
         <Provider store={store}>
           <MemoryRouter initialEntries={["/campuses"]}>
-            <Root />
+            <Routes />
           </MemoryRouter>
         </Provider>
       );
