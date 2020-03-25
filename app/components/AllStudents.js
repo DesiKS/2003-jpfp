@@ -1,17 +1,21 @@
-import React from 'react';
+import React from "react";
+import { connect } from "react-redux";
 
-
-export default class AllStudents extends React.Component {
-
+// Notice that we're exporting the AllStudents component twice. The named export
+// (below) is not connected to Redux, while the default export (at the very
+// bottom) is connected to Redux. Our tests should cover _both_ cases.
+export class AllStudents extends React.Component {
   render() {
-    return (
-      <div />
-    )
+    return <div />;
   }
-
 }
 
-// Currently, we're just exporting the component as-is. When we're ready to
-// hook it up to the redux store, we'll export the connected component by default:
-// Remember to remove the export default listed above once your ready to export!
-// export default connect(mapState, mapDispatch)(AllStudents)
+const mapState = () => {
+  return {};
+};
+
+const mapDispatch = () => {
+  return {};
+};
+
+export default connect(mapState, mapDispatch)(AllStudents);
