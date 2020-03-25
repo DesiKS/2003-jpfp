@@ -67,7 +67,7 @@ describe("Tier One: Students", () => {
 
     // This test is interested in the unconnected AllStudents component. It is
     // exported as a named export in app/components/AllStudents.js
-    it("renders the students passed in as props", () => {
+    xit("renders the students passed in as props", () => {
       const wrapper = mount(
         <UnconnectedAllStudents
           students={students}
@@ -78,7 +78,7 @@ describe("Tier One: Students", () => {
       expect(wrapper.text()).to.include("Sally Ride");
     });
 
-    it("renders DIFFERENT students passed in as props", () => {
+    xit("renders DIFFERENT students passed in as props", () => {
       const differentStudents = [
         {
           id: 3,
@@ -110,7 +110,7 @@ describe("Tier One: Students", () => {
     // In a later step, we'll create a thunk, and map that thunk to AllCampuses
     // as getCampuses. For right now, we just need to be sure the component
     // calls it after it mounts.
-    it("calls this.props.getCampuses after mount", async () => {
+    xit("calls this.props.getCampuses after mount", async () => {
       mount(
         <UnconnectedAllStudents
           students={students}
@@ -130,14 +130,14 @@ describe("Tier One: Students", () => {
     });
 
     describe("set/fetch students", () => {
-      it("setStudents action creator returns a valid action", () => {
+      xit("setStudents action creator returns a valid action", () => {
         expect(setStudents(students)).to.deep.equal({
           type: "SET_STUDENTS",
           students
         });
       });
 
-      it("fetchStudents thunk creator returns a thunk that GETs /api/students", async () => {
+      xit("fetchStudents thunk creator returns a thunk that GETs /api/students", async () => {
         await fakeStore.dispatch(fetchStudents());
         const [getRequest] = mockAxios.history.get;
         expect(getRequest).to.not.equal(undefined);
@@ -158,7 +158,7 @@ describe("Tier One: Students", () => {
         throw new Error("replace this error with your own test");
       });
 
-      it("reduces on SET_STUDENTS action", () => {
+      xit("reduces on SET_STUDENTS action", () => {
         const action = {
           type: "SET_STUDENTS",
           students
@@ -178,7 +178,7 @@ describe("Tier One: Students", () => {
     // This tests is expecting your component to dispatch a thunk after it mounts
     // Remember that getStudents prop from an earlier test? Now's a good time
     // for a mapDispatch.
-    it("initializes students from the server when the application loads the /students route", async () => {
+    xit("initializes students from the server when the application loads the /students route", async () => {
       const reduxStateBeforeMount = store.getState();
       expect(reduxStateBeforeMount.campuses).to.deep.equal([]);
       mount(
@@ -196,7 +196,7 @@ describe("Tier One: Students", () => {
 
     // This test is expecting your component to render the students from the
     // Redux store. Now's a good time for a mapState.
-    it("<AllStudents /> renders students from the Redux store", async () => {
+    xit("<AllStudents /> renders students from the Redux store", async () => {
       const wrapper = mount(
         <Provider store={store}>
           <MemoryRouter initialEntries={["/students"]}>
@@ -226,7 +226,7 @@ describe("Tier One: Students", () => {
     });
 
     // This test expects that you've set up a Route for AllStudents
-    it("renders <AllStudents /> at /students", () => {
+    xit("renders <AllStudents /> at /students", () => {
       const wrapper = mount(
         <Provider store={store}>
           <MemoryRouter initialEntries={["/students"]}>
@@ -265,7 +265,7 @@ describe("Tier One: Students", () => {
     before(() => db.sync({ force: true }));
     afterEach(() => db.sync({ force: true }));
 
-    it("has fields firstName, lastName, email, imageUrl, gpa", async () => {
+    xit("has fields firstName, lastName, email, imageUrl, gpa", async () => {
       const student = await Student.create({
         firstName: "Sally",
         lastName: "Ride",
@@ -280,7 +280,7 @@ describe("Tier One: Students", () => {
       expect(parseFloat(student.gpa)).to.equal(3.8);
     });
 
-    it("requires firstName, lastName, email", async () => {
+    xit("requires firstName, lastName, email", async () => {
       const student = Student.build();
       try {
         await student.validate();
@@ -294,7 +294,7 @@ describe("Tier One: Students", () => {
       }
     });
 
-    it("firstName, lastName, email cannot be empty", async () => {
+    xit("firstName, lastName, email cannot be empty", async () => {
       const student = Student.build({
         firstName: "",
         lastName: "",
@@ -316,7 +316,7 @@ describe("Tier One: Students", () => {
       throw new Error("replace this error with your own test");
     });
 
-    it("gpa must be a float between 0.0 and 4.0", async () => {
+    xit("gpa must be a float between 0.0 and 4.0", async () => {
       const student = {
         firstName: "Sally",
         lastName: "Ride",
@@ -340,7 +340,7 @@ describe("Tier One: Students", () => {
       }
     });
 
-    it("default imageUrl if left blank", () => {
+    xit("default imageUrl if left blank", () => {
       const student = Student.build({
         firstName: "",
         lastName: "",
@@ -353,7 +353,7 @@ describe("Tier One: Students", () => {
   describe("Seed file", () => {
     beforeEach(seed);
 
-    it("populates the database with at least four campuses", async () => {
+    xit("populates the database with at least four campuses", async () => {
       const seededStudents = await Student.findAll();
       expect(seededStudents).to.have.lengthOf.at.least(4);
     });
