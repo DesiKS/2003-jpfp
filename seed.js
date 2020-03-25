@@ -1,41 +1,11 @@
 const { green, red } = require("chalk");
-const { db, Campus, Student } = require("./server/db");
+const { db } = require("./server/db");
 
 const seed = async () => {
   try {
     await db.sync({ force: true });
 
     // seed your database here!
-    const [mars] = await Campus.bulkCreate([
-      { name: "Mars Academy", address: "123 Planet Drive" },
-      { name: "Earth School", address: "456 Planet Lane" },
-      { name: "Venus Conservatory", address: "789 Planet Blvd" }
-    ]);
-
-    const [mae, sally] = await Student.bulkCreate([
-      {
-        firstName: "Mae",
-        lastName: "Jemison",
-        email: "mae.jemison@nasa.gov"
-      },
-      {
-        firstName: "Sally",
-        lastName: "Ride",
-        email: "sally.ride@nasa.gov"
-      },
-      {
-        firstName: "Mary",
-        lastName: "Shelley",
-        email: "mary.shelly@itsfrankentime.tumblr.com"
-      },
-      {
-        firstName: "Ada",
-        lastName: "Lovelace",
-        email: "ada@analyticalengine.com"
-      }
-    ]);
-    await mars.addStudents([mae, sally])
-
   } catch (err) {
     console.log(red(err));
   }
