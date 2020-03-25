@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { fetchStudents } from "../redux/students";
 
 export class AllStudents extends React.Component {
   componentDidMount() {
@@ -24,12 +25,16 @@ export class AllStudents extends React.Component {
   }
 }
 
-const mapState = () => {
-  return {};
+const mapState = (reduxState) => {
+  return {
+    students: reduxState.students
+  };
 };
 
-const mapDispatch = () => {
-  return {};
+const mapDispatch = (dispatch) => {
+  return {
+    getStudents: () => dispatch(fetchStudents())
+  };
 };
 
 export default connect(mapState, mapDispatch)(AllStudents);

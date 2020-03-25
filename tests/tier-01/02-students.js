@@ -166,17 +166,19 @@ describe("Tier One: Students", () => {
       fakeStore = mockStore(initialState);
     });
 
-    describe("set students", () => {
-      xit("setStudents action creator", () => {
+    describe("set/fetch students", () => {
+      it("setStudents action creator returns a valid action", () => {
         expect(setStudents(students)).to.deep.equal({
           type: "SET_STUDENTS",
           students
         });
       });
 
-      xit("fetchStudents thunk creator", async () => {
-        mockAxios.onGet("/api/students").replyOnce(200, students);
+      it("fetchStudents thunk creator returns a thunk that GETs /api/students", async () => {
         await fakeStore.dispatch(fetchStudents());
+        const [getRequest] = mockAxios.history.get;
+        expect(getRequest).to.not.equal(undefined);
+        expect(getRequest.url).to.equal("/api/students");
         const actions = fakeStore.getActions();
         expect(actions[0].type).to.equal("SET_STUDENTS");
         expect(actions[0].students).to.deep.equal(students);
@@ -193,19 +195,7 @@ describe("Tier One: Students", () => {
         throw new Error("replace this error with your own test");
       });
 
-      xit("reduces on SET_STUDENTS action", () => {
-        const students = [
-          {
-            id: 1,
-            firstName: "Mae",
-            lastName: "Jemison"
-          },
-          {
-            id: 2,
-            firstName: "Sally",
-            lastName: "Ride"
-          }
-        ];
+      it("reduces on SET_STUDENTS action", () => {
         const action = {
           type: "SET_STUDENTS",
           students
@@ -221,25 +211,83 @@ describe("Tier One: Students", () => {
     });
   });
 
+  describe("Connect: react-redux", () => {
+    // This tests is expecting your component to dispatch a thunk after it mounts
+    // Remember that getStudents prop from an earlier test? Now's a good time
+    // for a mapDispatch.
+    it("initializes students from the server when the application loads the /students route", async () => {
+      const reduxStateBeforeMount = store.getState();
+      expect(reduxStateBeforeMount.campuses).to.deep.equal([]);
+      mount(
+        <Provider store={store}>
+          <MemoryRouter initialEntries={["/students"]}>
+            <AllStudents />
+          </MemoryRouter>
+        </Provider>
+      );
+      await waitForExpect(() => {
+        const reduxStateAfterMount = store.getState();
+        expect(reduxStateAfterMount.students).to.deep.equal(students);
+      });
+    });
+
+    // This test is expecting your component to render the students from the
+    // Redux store. Now's a good time for a mapState.
+    it("<AllStudents /> renders students from the Redux store", async () => {
+      const wrapper = mount(
+        <Provider store={store}>
+          <MemoryRouter initialEntries={["/students"]}>
+            <AllStudents />
+          </MemoryRouter>
+        </Provider>
+      );
+      await waitForExpect(() => {
+        wrapper.update();
+
+        const { students: reduxStudents } = store.getState();
+        reduxStudents.forEach(reduxStudent => {
+          expect(wrapper.text()).to.include(reduxStudent.firstName);
+        });
+      });
+    });
+  });
+
+  describe("Navigation", () => {
+    beforeEach(() => {
+      sinon.stub(rrd, "BrowserRouter").callsFake(({ children }) => {
+        return <div>{children}</div>;
+      });
+    });
+    afterEach(() => {
+      rrd.BrowserRouter.restore();
+    });
+
+    // This test expects that you've set up a Route for AllStudents
+    it("renders <AllStudents /> at /students", () => {
+      const wrapper = mount(
+        <Provider store={store}>
+          <MemoryRouter initialEntries={["/students"]}>
+            <Routes />
+          </MemoryRouter>
+        </Provider>
+      );
+      expect(wrapper.find(AllStudents)).to.have.length(1);
+      expect(wrapper.find(AllCampuses)).to.have.length(0);
+    });
+
+    xit('*** navbar has a link to "/students"', () => {
+      throw new Error("replace this error with your own test");
+    });
+  });
+
   describe("Express API", () => {
     // Let's test our Express routes WITHOUT actually using the database.
-    // By replacing the findAll methods on the Campus and Student models
-    // with a spy, we can ensure that our API tests won't fail just because
+    // By replacing the findAll methods on our Sequelize models with a spy,
+    // we can ensure that our API tests won't fail just because
     // our Sequelize models haven't been implemented yet.
     const { findAll: studentFindAll } = Student;
     beforeEach(() => {
-      Student.findAll = sinon.spy(() => [
-        {
-          id: 1,
-          firstName: "Mae",
-          lastName: "Jemison"
-        },
-        {
-          id: 2,
-          firstName: "Sally",
-          lastName: "Ride"
-        }
-      ]);
+      Student.findAll = sinon.spy(() => students);
     });
     afterEach(() => {
       Student.findAll = studentFindAll;
@@ -254,7 +302,7 @@ describe("Tier One: Students", () => {
     before(() => db.sync({ force: true }));
     afterEach(() => db.sync({ force: true }));
 
-    xit("has fields firstName, lastName, email, imageUrl, gpa", async () => {
+    it("has fields firstName, lastName, email, imageUrl, gpa", async () => {
       const student = await Student.create({
         firstName: "Sally",
         lastName: "Ride",
@@ -269,7 +317,7 @@ describe("Tier One: Students", () => {
       expect(parseFloat(student.gpa)).to.equal(3.8);
     });
 
-    xit("requires firstName, lastName, email", async () => {
+    it("requires firstName, lastName, email", async () => {
       const student = Student.build();
       try {
         await student.validate();
@@ -283,7 +331,7 @@ describe("Tier One: Students", () => {
       }
     });
 
-    xit("firstName, lastName, email cannot be empty", async () => {
+    it("firstName, lastName, email cannot be empty", async () => {
       const student = Student.build({
         firstName: "",
         lastName: "",
@@ -305,7 +353,7 @@ describe("Tier One: Students", () => {
       throw new Error("replace this error with your own test");
     });
 
-    xit("gpa must be a float between 0.0 and 4.0", async () => {
+    it("gpa must be a float between 0.0 and 4.0", async () => {
       const student = {
         firstName: "Sally",
         lastName: "Ride",
@@ -329,7 +377,7 @@ describe("Tier One: Students", () => {
       }
     });
 
-    xit("default imageUrl if left blank", () => {
+    it("default imageUrl if left blank", () => {
       const student = Student.build({
         firstName: "",
         lastName: "",
@@ -337,6 +385,14 @@ describe("Tier One: Students", () => {
       });
       expect(student.imageUrl).to.be.a("string");
       expect(student.imageUrl.length).to.be.greaterThan(1);
+    });
+  });
+  describe("Seed file", () => {
+    beforeEach(seed);
+
+    it("populates the database with at least four campuses", async () => {
+      const seededStudents = await Student.findAll();
+      expect(seededStudents).to.have.lengthOf.at.least(4);
     });
   });
 });

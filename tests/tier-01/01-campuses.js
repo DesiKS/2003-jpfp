@@ -194,8 +194,8 @@ describe("Tier One: Campuses", () => {
 
   describe("Connect: react-redux", () => {
     // This tests is expecting your component to dispatch a thunk after it mounts
-    // Remember that getCampuses prop from an earlier test....?
-    // Remember mapDispatch....?
+    // Remember that getCampuses prop from an earlier test? Now's a good time
+    // for a mapDispatch.
     it("initializes campuses from the server when the application loads the /campuses route", async () => {
       const reduxStateBeforeMount = store.getState();
       expect(reduxStateBeforeMount.campuses).to.deep.equal([]);
@@ -213,7 +213,7 @@ describe("Tier One: Campuses", () => {
     });
 
     // This test is expecting your component to render the campuses from the
-    // Redux store. Remember mapState....?
+    // Redux store.  Now's a good time for a mapState.
     it("<AllCampuses /> renders campuses from the Redux store", async () => {
       const wrapper = mount(
         <Provider store={store}>
@@ -234,7 +234,6 @@ describe("Tier One: Campuses", () => {
   });
 
   describe("Navigation", () => {
-    // TODO: Add these to the setuo file
     beforeEach(() => {
       sinon.stub(rrd, "BrowserRouter").callsFake(({ children }) => {
         return <div>{children}</div>;
@@ -244,7 +243,7 @@ describe("Tier One: Campuses", () => {
       rrd.BrowserRouter.restore();
     });
 
-    //Checks that the route renders the right component
+    // This test expects that you've set up a Route for AllCampuses
     it("renders <AllCampuses /> at /campuses", () => {
       const wrapper = mount(
         <Provider store={store}>
@@ -257,30 +256,19 @@ describe("Tier One: Campuses", () => {
       expect(wrapper.find(AllStudents)).to.have.length(0);
     });
 
-    xit('*** navbar has links to "/robots" and "/" (homepage)', () => {
+    xit('*** navbar has links to "/campuses" and "/" (homepage)', () => {
       throw new Error("replace this error with your own test");
     });
   });
 
   describe("Express API", () => {
     // Let's test our Express routes WITHOUT actually using the database.
-    // By replacing the findAll methods on the Campus and Student models
-    // with a spy, we can ensure that our API tests won't fail just because
+    // By replacing the findAll methods on our Sequelize models with a spy,
+    // we can ensure that our API tests won't fail just because
     // our Sequelize models haven't been implemented yet.
     const { findAll: campusFindAll } = Campus;
     beforeEach(() => {
-      Campus.findAll = sinon.spy(() => [
-        {
-          id: 1,
-          name: "Mars Academy",
-          imageUrl: "/images/mars.png"
-        },
-        {
-          id: 2,
-          name: "Jupiter Jumpstart",
-          imageUrl: "/images/jupiter.jpeg"
-        }
-      ]);
+      Campus.findAll = sinon.spy(() => campuses);
     });
     afterEach(() => {
       Campus.findAll = campusFindAll;
@@ -310,8 +298,8 @@ describe("Tier One: Campuses", () => {
     before(() => db.sync({ force: true }));
     afterEach(() => db.sync({ force: true }));
 
-    it("has fields name, address, imageUrl, description", () => {
-      const campus = Campus.build({
+    it("has fields name, address, imageUrl, description", async () => {
+      const campus = await Campus.create({
         name: "Jupiter Jumpstart",
         address: "5.2 AU",
         imageUrl: "/images/jupiter.png",

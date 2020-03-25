@@ -6,6 +6,7 @@ import {
   NavLink
 } from "react-router-dom";
 import AllCampuses from "./AllCampuses";
+import AllStudents from "./AllStudents";
 
 const Routes = () => {
   return (
@@ -17,6 +18,7 @@ const Routes = () => {
         </nav>
         <Switch>
           <Route path="/campuses" component={AllCampuses} />
+          <Route path="/students" component={AllStudents} />
           <Route>
             <main>
               <h1>Welcome to the Margaret Hamilton Academy of JavaScript!</h1>
