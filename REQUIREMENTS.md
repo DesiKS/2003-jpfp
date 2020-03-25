@@ -2,7 +2,7 @@
 
 The requirements below are broken into separate **tiers**, which model the way we **recommend you approach the project**. That is, we recommend you complete (or complete the majority of) the requirements in Tier 1 before moving on to Tier 2, and so on. Of course, if you get stuck on a particular feature, we recommend moving on and trying another feature - don't sacrifice the good for the perfect!
 
-### Tier 1: All Campuses and Students (30/71)
+### Tier 1: All Campuses and Students (28/69)
 
 <details>
 
@@ -48,14 +48,12 @@ The requirements below are broken into separate **tiers**, which model the way w
 - [ ] Sequelize (Campus): requires name and address
 - [ ] Sequelize (Student): email must be a valid email
 - [ ] Navigation: navbar to navigate to home, campuses, students
-- [ ] Seed file: creates exactly one campus that has no students
-- [ ] Seed file: creates exactly one student that is not enrolled in a campus
 
 Congrats! You have completed your first vertical slice! Make sure to `commit -m "Feature: Get All Campuses and Students"` before moving on (see RUBRIC.md - points are awarded/deducted for a proper git workflow)!
 
 </details>
 
-### Tier 2: Single Student and Single Campus (12/71)
+### Tier 2: Single Student and Single Campus (12/69)
 
 <details>
 
@@ -85,7 +83,7 @@ Congrats! You have completed your second vertical slice! Make sure to `commit -m
 
 </details>
 
-### Tier 3: Adding a Campus and Adding a Student (10/71)
+### Tier 3: Adding a Campus and Adding a Student (10/69)
 
 <details>
 
@@ -113,7 +111,7 @@ Congrats! You have completed your third vertical slice! Make sure to `commit -m 
 
 </details>
 
-### Tier 4: Removing a Campus and Removing a Student (8/71)
+### Tier 4: Removing a Campus and Removing a Student (8/69)
 
 <details>
 
@@ -139,7 +137,7 @@ Congrats! You have completed your fourth vertical slice! Make sure to `commit -m
 
 </details>
 
-### Tier 5: Updating a Campus and Updating a Student (11/71)
+### Tier 5: Updating a Campus and Updating a Student (11/69)
 
 <details>
 

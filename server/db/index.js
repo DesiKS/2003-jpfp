@@ -11,7 +11,6 @@ const Campus = require('./campus')
 //
 // Puppy.belongsTo(Owner)
 
-
 module.exports = {
   // Include your models in this exports object as well!
   db,
