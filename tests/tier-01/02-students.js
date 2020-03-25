@@ -1,37 +1,3 @@
-// const { expect } = require('chai')
-// import enzyme, { shallow } from 'enzyme'
-// import sinon from 'sinon'
-// import React from 'react'
-// import Adapter from 'enzyme-adapter-react-16'
-// import configureMockStore from 'redux-mock-store'
-// import thunkMiddleware from 'redux-thunk'
-
-// const middlewares = [thunkMiddleware]
-// const mockStore = configureMockStore(middlewares)
-// const initialState = {
-//   students: [],
-// }
-
-// import mockAxios from '../mock-axios'
-// import { setStudents, fetchStudents } from '../../app/redux/students'
-
-// import rootReducer from '../../app/redux'
-// import { createStore } from 'redux'
-
-// const app = require('../../server')
-// const agent = require('supertest')(app)
-
-// const { db } = require('../../server/db')
-// const { Student } = require('../../server/db')
-
-// const adapter = new Adapter()
-// enzyme.configure({ adapter })
-
-// /* NOTE: Make sure you pay attention to the path below. This is where your React components should live! */
-// import AllStudents from '../../app/components/AllStudents'
-
-// -------------------------------------------------------------------------------------
-
 /* eslint-disable no-unused-expressions */
 import { expect } from "chai";
 import { mount } from "enzyme";
@@ -59,17 +25,14 @@ import store from "../../app/store";
 import rootReducer from "../../app/redux";
 import { createStore } from "redux";
 
-const app = require("../../server");
-const agent = require("supertest")(app);
-
 const { db, Student } = require("../../server/db");
 
 const seed = require("../../seed");
 
 // NOTE: Make sure you pay attention to the path below. This is where your React components should live!
-// AllCampuses is the default export from that module, and it is connected to Redux
-// UnconnectedAllCampuses is a named export from that module, and it is NOT connected
-// to Redux. We're testing BOTH of these components in this slice.
+// AllStudents is the default export from that module, and it is connected to Redux.
+// UnconnectedAllStudents is a named export from that module, and it is NOT connected
+// to Redux. We're testing BOTH of these components in here.
 import AllStudents, {
   AllStudents as UnconnectedAllStudents
 } from "../../app/components/AllStudents";

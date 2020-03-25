@@ -33,9 +33,9 @@ const { db, Campus } = require("../../server/db");
 const seed = require("../../seed");
 
 // NOTE: Make sure you pay attention to the path below. This is where your React components should live!
-// AllCampuses is the default export from that module, and it is connected to Redux
+// AllCampuses is the default export from that module, and it is connected to Redux.
 // UnconnectedAllCampuses is a named export from that module, and it is NOT connected
-// to Redux. We're testing BOTH of these components in this slice.
+// to Redux. We're testing BOTH of these components in here.
 import AllCampuses, {
   AllCampuses as UnconnectedAllCampuses
 } from "../../app/components/AllCampuses";

@@ -6,13 +6,13 @@ const seed = async () => {
     await db.sync({ force: true });
 
     // seed your database here!
-    await Campus.bulkCreate([
+    const [mars] = await Campus.bulkCreate([
       { name: "Mars Academy", address: "123 Planet Drive" },
       { name: "Earth School", address: "456 Planet Lane" },
       { name: "Venus Conservatory", address: "789 Planet Blvd" }
     ]);
 
-    await Student.bulkCreate([
+    const [mae, sally] = await Student.bulkCreate([
       {
         firstName: "Mae",
         lastName: "Jemison",
@@ -34,6 +34,8 @@ const seed = async () => {
         email: "ada@analyticalengine.com"
       }
     ]);
+    await mars.addStudents([mae, sally])
+
   } catch (err) {
     console.log(red(err));
   }
