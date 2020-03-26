@@ -299,7 +299,7 @@ describe('Tier One: Campuses', () => {
     before(() => db.sync({ force: true }));
     afterEach(() => db.sync({ force: true }));
 
-    xit('has fields name, address, imageUrl, description', async () => {
+    it('has fields name, address, imageUrl, description', async () => {
       const campus = await Campus.create({
         name: 'Jupiter Jumpstart',
         address: '5.2 AU',
@@ -319,7 +319,7 @@ describe('Tier One: Campuses', () => {
       throw new Error('replace this error with your own test');
     });
 
-    xit('name and address cannot be empty', async () => {
+    it('name and address cannot be empty', async () => {
       const campus = Campus.build({ name: '', address: '' });
       try {
         await campus.validate();
@@ -332,7 +332,7 @@ describe('Tier One: Campuses', () => {
       }
     });
 
-    xit('default imageUrl if left blank', async () => {
+    it('default imageUrl if left blank', async () => {
       const campus = Campus.build({
         name: 'Jupiter Jumpstart',
         address: '5.2 AU'
@@ -346,7 +346,7 @@ describe('Tier One: Campuses', () => {
   describe('Seed file', () => {
     beforeEach(seed);
 
-    xit('populates the database with at least three campuses', async () => {
+    it('populates the database with at least three campuses', async () => {
       const seededCampuses = await Campus.findAll();
       expect(seededCampuses).to.have.lengthOf.at.least(3);
     });

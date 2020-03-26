@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import store from './store';
 import Routes from './components/Routes';
 import AllCampuses from './components/AllCampuses';
+import AllStudents from './components/AllStudents';
 
 render(
   <Provider store={store}>
@@ -14,6 +15,7 @@ render(
       <Switch>
         <Route path="/" component={Routes} />
         <Route path="/campuses" component={AllCampuses} />
+        <Route exact path="/students" component={AllStudents} />
       </Switch>
     </Router>
   </Provider>,
