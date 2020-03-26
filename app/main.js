@@ -13,8 +13,8 @@ render(
     {/* <Routes /> */}
     <Router>
       <Switch>
-        <Route path="/" component={Routes} />
-        <Route path="/campuses" component={AllCampuses} />
+        <Route exact path="/" component={Routes} />
+        <Route exact path="/campuses" component={AllCampuses} />
         <Route exact path="/students" component={AllStudents} />
       </Switch>
     </Router>
