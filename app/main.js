@@ -10,14 +10,14 @@ import AllStudents from './components/AllStudents';
 
 render(
   <Provider store={store}>
-    {/* <Routes /> */}
-    <Router>
+    <Routes />
+    {/* <Router>
       <Switch>
         <Route exact path="/" component={Routes} />
         <Route exact path="/campuses" component={AllCampuses} />
         <Route exact path="/students" component={AllStudents} />
       </Switch>
-    </Router>
+    </Router> */}
   </Provider>,
   document.getElementById('main')
 );
